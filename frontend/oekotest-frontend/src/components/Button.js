@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 
-const Button = ( {text, onDelete, targetId} ) => {
+const Button = ( {text, execFunction} ) => {
     // const id = {targetId}
     return(
-        <button className='btn' onClick={() => onDelete({targetId})}>
+        <button className='btn' onClick={execFunction}>
             {text}
         </button>
     )

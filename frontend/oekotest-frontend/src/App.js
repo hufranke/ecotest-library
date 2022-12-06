@@ -53,6 +53,12 @@ function App() {
       console.log('Error deleting this productlist')
     }
   }
+
+  // Reload categories
+  const reloadCats = async () => {
+    const data = await fetchProductLists();
+    setProductlists(data)
+  }
   
   
   // PRODUCTS
@@ -81,7 +87,7 @@ function App() {
     <div className="container">
       <Header title='Ökotest Listen' className='appHeader'/>
       <div className='appContent'>
-        <CatList catlists={productlists} onDelete={deleteCategory} fetchProducts={getProductListItems}/>
+        <CatList catlists={productlists} onDelete={deleteCategory} reload={reloadCats} fetchProducts={getProductListItems}/>
         <ProductList items={productListItems} deleteProduct={deleteProduct}/>
       </div>
     </div>

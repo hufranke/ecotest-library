@@ -12,6 +12,12 @@ body {
   width: 500px;
 }
 
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
 .catItem {
   display: flex;
   align-items: center;

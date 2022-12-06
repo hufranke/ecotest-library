@@ -1,10 +1,17 @@
 import Product from './Product'
+import Button from './Button'
+import NewProduct from './NewProduct'
+import { useState } from 'react'
 
 const ProductList = ({items, deleteProduct}) => {
+    const [dispNewProduct, setDispNewProduct] = useState(false);
+
     return(
         <div style={{marginLeft: '10px'}}>
-            <header>
+            <header className='list-header'>
                 <h2>Getestete Produkte</h2>
+                <Button text={'+ Produkt'}/>
+                {dispNewProduct === true ? <NewProduct/> :''}
             </header>
             <section className='product-container'>
                 {items.length > 0 ? (
