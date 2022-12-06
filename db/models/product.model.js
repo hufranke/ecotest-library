@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema({
-    _productListId: {
+    _catId: {
         type: mongoose.Types.ObjectId,
         required: true
     },
@@ -11,15 +11,13 @@ const ProductSchema = new mongoose.Schema({
         minlength: 1, 
         trim: true
     },
-    producer: {
+    provider: {
         type: String,
         required: true,
         minlength: 1,
         trim: true
     },
-    year: { type: Number },
-    vendor: { type: String },
-    price: { type: Number },
+    price: { type: mongoose.Decimal128 },
     rating: { type: String }
 })
 

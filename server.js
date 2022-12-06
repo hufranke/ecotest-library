@@ -1,68 +1,75 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const app = express();
-const port = 3000;
+const port = 5000;
 const bodyParser = require("body-parser");
+const cors = require("cors")
+const app = express();
 
 const connectDB = require("./db/mongologic");
 
 // Load models
-const { ProductList, Product } = require("./db/models/index.model");
+const { Category, Product } = require("./db/models/index.model");
 
 // Load middleware
 app.use(bodyParser.json())
+app.use(cors())
+// app.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+//  });
 
 /** ROUTE HANDLERS */
 
-/** PRODUCTLIST ROUTES*/
+/** CATEGORY ROUTES*/
 
 /**
- * GET /productlists
+ * GET /cats
  * Get all lists
  */
-app.get("/productlists", (req, res) => {
-    ProductList.find({}).then((productLists) => {
-        res.send(productLists);
+app.get("/cats", (req, res) => {
+    Category.find({}).then((cats) => {
+        res.send(cats);
     })
 })
 /**
  * POST /lists
  * Create a new list
  */
-app.post("/productlists", (req, res) => {
+app.post("/cats", (req, res) => {
     let title = req.body.title;
 
-    let newProductList = new ProductList({
+    let newCat = new Category({
         title
     });
 
-    newProductList.save().then((productListDoc) => {
-        res.send(productListDoc);
+    newCat.save().then((catDoc) => {
+        res.send(catDoc);
     })
 })
 /**
  * GET /lists:id
  * Get a specific list
  */
-app.get("/productlists/:id", (req, res) => {
-    ProductList.findOne({
+app.get("/cats/:id", (req, res) => {
+    Category.findOne({
         _id: req.params.id
-    }).then((listDoc) => {
-        res.send(listDoc);
+    }).then((catDoc) => {
+        res.send(catDoc);
     })
 })
 /**
  * PATCH /lists:id
  * Update a specific list
  */
-app.patch("/productlists/:id", (req, res) => {
-    ProductList.findOneAndUpdate({
+app.patch("/cats/:id", (req, res) => {
+    Category.findOneAndUpdate({
         _id: req.params.id
     }, {
         $set: req.body
-    }).then((producListDoc) => {
-        res.send(`Product list ${producListDoc.id} updated`)
+    }).then((catsDoc) => {
+        res.send(`Product list ${catsDoc.id} updated`)
         // res.send(producListDoc)
     })
 })
@@ -70,11 +77,12 @@ app.patch("/productlists/:id", (req, res) => {
  * DELETE /lists:id
  * Delete a specific list
  */
-app.delete("/productlists/:id", (req, res) => {
-    ProductList.findOneAndDelete({
+app.delete("/cats/:id", (req, res) => {
+    Category.findOneAndDelete({
         _id: req.params.id
-    }).then((productListDoc) => {
-        res.send(productListDoc)
+    }).then((catsDoc) => {
+        // res.send(catsDoc)
+        res.sendStatus(200)
     })
 })
 
@@ -82,37 +90,37 @@ app.delete("/productlists/:id", (req, res) => {
 /** PRODUCT ROUTES */
 
 /**
- * GET /lists:productListId/products
+ * GET /cats:catId/products
  * Get products of a specific list
  */
-app.get("/productlists/:productListId/products", (req, res) => {
+app.get("/cats/:catId/products", (req, res) => {
     Product.find({
-        _productListId: req.params.productListId
+        _catId: req.params.catId
     }).then((productsDoc) => {
         res.send(productsDoc)
     })
 })
 /**
- * GET /lists:productListId/products/:productId
+ * GET /cats:catId/products/:productId
  * Get a specific product in a specific product list
  */
-app.get("/productlists/:productListId/products/:productId", (req, res) => {
+app.get("/cats/:catId/products/:productId", (req, res) => {
     Product.findOne({
-        _productListId: req.params.productListId,
+        _catId: req.params.catId,
         _id: req.params.productId
     }).then((productDoc) => {
         res.send(productDoc)
     })
 })
 /**
- * POST /lists:productListId/products
+ * POST /cats:catId/products
  * Create a new product in a specific list
  */
-app.post("/productlists/:productListId/products", (req, res) => {
+app.post("/cats/:catId/products", (req, res) => {
     let newProduct = new Product({
-        _productListId: req.params.productListId, 
+        _catId: req.params.catId, 
         title: req.body.title,
-        producer: req.body.producer
+        provider: req.body.provider
     })
 
     newProduct.save().then((productDoc) => {
@@ -120,12 +128,12 @@ app.post("/productlists/:productListId/products", (req, res) => {
     })
 })
 /**
- * PATCH /lists:productListId/products:id
+ * PATCH /cats:catId/products:id
  * Update a specific product on a speficic list
  */
-app.patch("/productlists/:productListId/products/:productId", (req, res) => {
+app.patch("/cats/:catId/products/:productId", (req, res) => {
     Product.findOneAndUpdate({
-        _productListId: req.params.productListId,
+        _catId: req.params.catId,
         _id: req.params.productId
     },{
         $set: req.body
@@ -135,12 +143,12 @@ app.patch("/productlists/:productListId/products/:productId", (req, res) => {
 
 })
 /**
- * DELETE /lists:productListId/products:id
+ * DELETE /cats:catId/products:id
  * Delete a specific product on a specific list
  */
-app.delete("/productlists/:productListId/products/:productId", (req, res) => {
+app.delete("/cats/:catId/products/:productId", (req, res) => {
     Product.findOneAndDelete({
-        _productListId: req.params.productListId,
+        _catId: req.params.catId,
         _id: req.params.productId
     }).then((productDoc) => {
         res.send(`Deleted: ${productDoc}`)

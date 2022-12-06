@@ -1,10 +1,17 @@
 import {useState, useEffect} from 'react'
 import Header from "./components/Header";
-import ProductList from './components/ProductList';
+import CatList from './components/CatList';
+import ProductList from './components/ProductList'
 
 function App() {
   const [productlists, setProductlists] = useState([])
+  const [productListItems, setproductListItems] = useState([])
 
+  /**
+   * ROUTES
+   */
+
+  // Initial
   useEffect(() => {
     const getProductLists = async () => {
       const productListsDoc = await fetchProductLists();
@@ -16,36 +23,67 @@ function App() {
 
   // Fetch productLists from server
   const fetchProductLists = async () => {
-    const res = await fetch('http://localhost:5000/productlists/', {
-      mode: "cors" //enables cors
-    })
+    const res = await fetch('http://localhost:5000/cats/', {})
     const data = await res.json()
 
     return data
   }
+  
+  // Fetch products to active productlist from server 
+  const fetchProducts = async (id) => {
+    console.log(id)
+    const res = await fetch(`http://localhost:5000/cats/${id}/products/`, {})
+    const data = await res.json()
+    
+    // console.log(productListItems)
+    return data
+  }
+  
+
+  // CATEGORIES
 
   // Delete productList from server
-  const deleteProductList = async (id) => {
-    console.log(id)
-    const res = await fetch(`http://localhost:5000/productlists/${id}`, {
-      // DEV STATUS: GETS CORS ERRORn
-      mode: "cors",
+  const deleteCategory = async (id) => {
+    const res = await fetch(`http://localhost:5000/cats/${id}`, {
       method: "DELETE"
     })
-
     if(res.status === 200) {
       setProductlists(productlists.filter((productlist) => productlist._id !== id))
     } else {
       console.log('Error deleting this productlist')
     }
   }
+  
+  
+  // PRODUCTS
+  
+  // Get products of a specific list
+  const getProductListItems = async (id) => {
+    const data = await fetchProducts(id);
+    setproductListItems(data)
+    console.log(productListItems)
+  }
 
-  // Create new list
+  // Delete specific product
+  const deleteProduct = async (catId, prodId) => {
+    const res = await fetch(`http://localhost:5000/cats/${catId}/products/${prodId}`, {
+      method: "DELETE"
+    })
+    if(res.status === 200) {
+      setproductListItems(productListItems.filter((productListItems) => productListItems._id !== prodId))
+    } else {
+      console.log(`Error deleting product with id ${prodId}`)
+    }
+  }
+   
 
   return (
     <div className="container">
-      <Header title='Ökotest Listen'/>
-      <ProductList productlists={productlists} onDelete={deleteProductList}/>
+      <Header title='Ökotest Listen' className='appHeader'/>
+      <div className='appContent'>
+        <CatList catlists={productlists} onDelete={deleteCategory} fetchProducts={getProductListItems}/>
+        <ProductList items={productListItems} deleteProduct={deleteProduct}/>
+      </div>
     </div>
   );
 }
