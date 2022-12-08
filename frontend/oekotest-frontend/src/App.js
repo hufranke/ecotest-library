@@ -6,7 +6,13 @@ import ProductList from './components/ProductList'
 function App() {
   const [productlists, setProductlists] = useState([])
   const [productListItems, setproductListItems] = useState([])
+  const [activeCat, setActiveCat] = useState()
 
+  // Toggle selected productlist
+  const setCatFocus = (catlistId) => {
+      setActiveCat(catlistId)
+      console.log('Set to active cat: '+activeCat)
+  }
   /**
    * ROUTES
    */
@@ -70,6 +76,21 @@ function App() {
     console.log(productListItems)
   }
 
+  // Ad new product to a specific list
+  const addProduct = async (catId, prodData) => {
+    const res = await fetch(`http://localhost:5000/cats/${catId}/products/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(prodData)
+    })
+
+    const data = await res.json
+
+    setproductListItems([...productListItems, data])
+  }
+
   // Delete specific product
   const deleteProduct = async (catId, prodId) => {
     const res = await fetch(`http://localhost:5000/cats/${catId}/products/${prodId}`, {
@@ -87,8 +108,8 @@ function App() {
     <div className="container">
       <Header title='Ökotest Listen' className='appHeader'/>
       <div className='appContent'>
-        <CatList catlists={productlists} onDelete={deleteCategory} reload={reloadCats} fetchProducts={getProductListItems}/>
-        <ProductList items={productListItems} deleteProduct={deleteProduct}/>
+        <CatList catlists={productlists} activeCat={activeCat} setCatFocus={setCatFocus} onDelete={deleteCategory} reload={reloadCats} fetchProducts={getProductListItems}/>
+        <ProductList items={productListItems} activeCat={activeCat} deleteProduct={deleteProduct} addProduct={addProduct}/>
       </div>
     </div>
   );

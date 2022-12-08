@@ -21,7 +21,6 @@ const CatItem = ({catlistItem, onDelete, fetchProducts, activeCat, setActive}) =
                     <FaTimes
                         style={{ color: 'red', cursor: 'pointer', marginLeft: '3px' }}
                         onClick={() => {
-                            console.log(catlistItem._id)
                             onDelete(catlistItem._id)
                         }}
                     />

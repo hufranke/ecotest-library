@@ -3,16 +3,26 @@ import Button from './Button'
 import NewProduct from './NewProduct'
 import { useState } from 'react'
 
-const ProductList = ({items, deleteProduct}) => {
+const ProductList = ({items, activeCat, deleteProduct, addProduct}) => {
     const [dispNewProduct, setDispNewProduct] = useState(false);
+
+    console.log('Active Cat :'+activeCat)
+
+    const toggleDispNewProduct = () => {
+        setDispNewProduct(!dispNewProduct)
+    }
 
     return(
         <div style={{marginLeft: '10px'}}>
             <header className='list-header'>
-                <h2>Getestete Produkte</h2>
-                <Button text={'+ Produkt'}/>
-                {dispNewProduct === true ? <NewProduct/> :''}
+                <div>
+                    <h2 style={{display: 'inline'}}>Getestete Produkte</h2>
+                </div>
+                <Button text={'+ Produkt'} execFunction={toggleDispNewProduct}/>
             </header>
+            <div>
+                {dispNewProduct === true ? <NewProduct addProduct={addProduct} catId={activeCat}/> :''}
+            </div>
             <section className='product-container'>
                 {items.length > 0 ? (
                     <div className='product-heading-container'>

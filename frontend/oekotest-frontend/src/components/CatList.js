@@ -1,16 +1,8 @@
 import Button from './Button'
 import CatItem from './CatItem'
-import { useState } from 'react'
 import {FaSyncAlt} from 'react-icons/fa'
 
-const CatList = ({catlists, onDelete, reload, fetchProducts}) => {
-    const [activeCat, setActiveCat] = useState()
-
-    // Toggle selected productlist
-    const setActive = (catlistId) => {
-        setActiveCat(catlistId)
-    }
-
+const CatList = ({catlists, onDelete, reload, fetchProducts, activeCat, setCatFocus}) => {
     return(
         <div className='catListContainer'>
             <header className='list-header'>
@@ -22,7 +14,7 @@ const CatList = ({catlists, onDelete, reload, fetchProducts}) => {
             </header>
             <section>
                 {catlists.map((catlistItem) => (
-                    <CatItem key={catlistItem._id} catlistItem={catlistItem} onDelete={onDelete} fetchProducts={fetchProducts} activeCat={activeCat} setActive={setActive}/>
+                    <CatItem key={catlistItem._id} catlistItem={catlistItem} onDelete={onDelete} fetchProducts={fetchProducts} activeCat={activeCat} setActive={setCatFocus}/>
                     ))}
             </section>
         </div>

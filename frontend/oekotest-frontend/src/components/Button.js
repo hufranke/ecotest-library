@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 const Button = ( {text, execFunction} ) => {
     // const id = {targetId}
     return(
-        <button className='btn' onClick={execFunction}>
+        <button
+            onClick={execFunction}
+            className='btn' >
             {text}
         </button>
     )

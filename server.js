@@ -120,7 +120,11 @@ app.post("/cats/:catId/products", (req, res) => {
     let newProduct = new Product({
         _catId: req.params.catId, 
         title: req.body.title,
-        provider: req.body.provider
+        provider: req.body.provider,
+        price: {
+            $numberDecimal: req.body.price
+        },
+        rating: req.body.rating
     })
 
     newProduct.save().then((productDoc) => {

@@ -91,3 +91,29 @@ body {
   margin: 0;
   padding: 10px 20px;
 }
+
+.newProduct-container {
+  margin: 10px 0 10px 0;
+}
+
+.newProduct-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  height:60px;
+}
+
+.newProduct-form-heading {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 150px));
+  border-top: 0;
+  margin: 0;
+  padding: 10px 0 0 20px;
+}
+
+.newProduct-form-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 150px));
+  background-color: #f4f4f4;
+  padding-left: 20px;
+}

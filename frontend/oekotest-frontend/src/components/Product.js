@@ -5,7 +5,7 @@ const Product = ({item, onDelete}) => {
         <div className="product-data">
             <div>{item.title}</div>
             <div>{item.provider}</div>
-            <div>{item.price ? item.price.$numberDecimal : '-'}</div>
+            <div>{item.price && item.price.$numberDecimal !== '0' ? item.price.$numberDecimal : '-'}</div>
             <div>{item.rating ? item.rating : '-'}</div>
             <div>
                 <FaPen
