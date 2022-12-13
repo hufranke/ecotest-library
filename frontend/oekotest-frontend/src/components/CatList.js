@@ -25,7 +25,13 @@ const CatList = ({catlists, onDelete, reload, fetchProducts, activeCat, setCatFo
             </div>
             <section>
                 {catlists.map((catlistItem) => (
-                    <CatItem key={catlistItem._id} catlistItem={catlistItem} onDelete={onDelete} fetchProducts={fetchProducts} activeCat={activeCat} setActive={setCatFocus}/>
+                    <CatItem
+                        key={catlistItem._id}
+                        catlistItem={catlistItem}
+                        onDelete={onDelete}
+                        fetchProducts={fetchProducts}
+                        activeCat={activeCat}
+                        setActive={setCatFocus}/>
                     ))}
             </section>
         </div>

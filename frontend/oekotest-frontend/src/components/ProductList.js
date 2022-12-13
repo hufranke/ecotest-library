@@ -6,8 +6,6 @@ import { useState } from 'react'
 const ProductList = ({items, activeCat, deleteProduct, addProduct}) => {
     const [dispNewProduct, setDispNewProduct] = useState(false);
 
-    console.log('Active Cat :'+activeCat)
-
     const toggleDispNewProduct = () => {
         setDispNewProduct(!dispNewProduct)
     }

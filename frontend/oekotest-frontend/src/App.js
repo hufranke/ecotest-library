@@ -11,7 +11,6 @@ function App() {
   // Toggle selected productlist
   const setCatFocus = (catlistId) => {
       setActiveCat(catlistId)
-      console.log('Set to active cat: '+activeCat)
   }
   /**
    * ROUTES
@@ -22,8 +21,10 @@ function App() {
     const getProductLists = async () => {
       const productListsDoc = await fetchProductLists();
       setProductlists(productListsDoc)
+      setCatFocus(productListsDoc[0]._id)
+      getProductListItems(productListsDoc[0]._id)
     }
-
+    
     getProductLists()
   }, []);
 
@@ -37,11 +38,9 @@ function App() {
   
   // Fetch products to active productlist from server 
   const fetchProducts = async (id) => {
-    console.log(id)
     const res = await fetch(`http://localhost:5000/cats/${id}/products/`, {})
     const data = await res.json()
     
-    // console.log(productListItems)
     return data
   }
   
@@ -87,7 +86,6 @@ function App() {
   const getProductListItems = async (id) => {
     const data = await fetchProducts(id);
     setproductListItems(data)
-    console.log(productListItems)
   }
 
   // Add new product to a specific list
