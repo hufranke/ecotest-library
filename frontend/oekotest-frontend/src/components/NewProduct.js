@@ -22,6 +22,7 @@ const NewProduct = ({addProduct, catId}) => {
         })
 
 
+
         setTitle('')
         setProvider('')
         setPrice('')
@@ -30,17 +31,17 @@ const NewProduct = ({addProduct, catId}) => {
 
     return(
     <div className="newProduct-container">
-        <form className="newProduct-form" onSubmit={onSubmit}>
-            <div className="newProduct-form-heading">
+        <form className="new-input-form" onSubmit={onSubmit}>
+            <div className="new-input-form-heading">
                 <label htmlFor="newTitle">Name*</label>
                 <label htmlFor="newProvider">Anbieter*</label>
                 <label htmlFor="newPrice">Preis</label>
                 <label htmlFor="newRating">Bewertung</label>
             </div>
-            <div className="newProduct-form-inputs">
-                <input id="newTitle" name="newTitle" type={'text'} placeholder={'Name'} required onChange={(e) => setTitle(e.target.value)}/>
-                <input id="newProvider" name="newProvider" type={'text'} placeholder={'Anbieter'} required onChange={(e) => setProvider(e.target.value)}/>
-                <input id="newPrice" name="newPrice" type={'text'} placeholder={'Preis'} onChange={(e) => setPrice(e.target.value)}/>
+            <div className="new-input-form-inputs">
+                <input id="newTitle" name="newTitle" type={'text'} placeholder={'Name'} value={title} required onChange={(e) => setTitle(e.target.value)}/>
+                <input id="newProvider" name="newProvider" type={'text'} placeholder={'Anbieter'} value={provider} required onChange={(e) => setProvider(e.target.value)}/>
+                <input id="newPrice" name="newPrice" type={'text'} placeholder={'Preis'} value={price} onChange={(e) => setPrice(e.target.value)}/>
                 <select id="newRating" name="newRating" onChange={(e) => setRating(e.target.value)}>
                     <option value={'sehr gut'}>sehr gut</option>
                     <option value={'gut'}>gut</option>

@@ -65,7 +65,21 @@ function App() {
     const data = await fetchProductLists();
     setProductlists(data)
   }
-  
+
+  // Add new category
+  const addCategory = async (catData) => {
+    const res = await fetch(`http://localhost:5000/cats/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(catData)
+    })
+
+    const data = await res.json
+
+    setProductlists([...productlists, data])
+  }
   
   // PRODUCTS
   
@@ -76,7 +90,7 @@ function App() {
     console.log(productListItems)
   }
 
-  // Ad new product to a specific list
+  // Add new product to a specific list
   const addProduct = async (catId, prodData) => {
     const res = await fetch(`http://localhost:5000/cats/${catId}/products/`, {
       method: 'POST',
@@ -108,7 +122,15 @@ function App() {
     <div className="container">
       <Header title='Ökotest Listen' className='appHeader'/>
       <div className='appContent'>
-        <CatList catlists={productlists} activeCat={activeCat} setCatFocus={setCatFocus} onDelete={deleteCategory} reload={reloadCats} fetchProducts={getProductListItems}/>
+        <CatList 
+          catlists={productlists} 
+          activeCat={activeCat} 
+          setCatFocus={setCatFocus} 
+          onDelete={deleteCategory} 
+          reload={reloadCats} 
+          fetchProducts={getProductListItems}
+          addCategory={addCategory}
+        />
         <ProductList items={productListItems} activeCat={activeCat} deleteProduct={deleteProduct} addProduct={addProduct}/>
       </div>
     </div>

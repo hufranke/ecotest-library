@@ -38,10 +38,9 @@ app.get("/cats", (req, res) => {
  * Create a new list
  */
 app.post("/cats", (req, res) => {
-    let title = req.body.title;
-
     let newCat = new Category({
-        title
+        title: req.body.title,
+        year: req.body.year
     });
 
     newCat.save().then((catDoc) => {
