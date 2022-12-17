@@ -4,11 +4,11 @@ import CatList from './components/CatList';
 import ProductList from './components/ProductList'
 
 function App() {
-  const [productlists, setProductlists] = useState([])
-  const [productListItems, setproductListItems] = useState([])
+  const [categories, setCategories] = useState([])
+  const [categoryItems, setCategoryItems] = useState([])
   const [activeCat, setActiveCat] = useState()
 
-  // Toggle selected productlist
+  // Toggle selected category
   const setCatFocus = (catlistId) => {
       setActiveCat(catlistId)
   }
@@ -18,25 +18,25 @@ function App() {
 
   // Initial
   useEffect(() => {
-    const getProductLists = async () => {
-      const productListsDoc = await fetchProductLists();
-      setProductlists(productListsDoc)
+    const getCategories = async () => {
+      const productListsDoc = await fetchCategories();
+      setCategories(productListsDoc)
       setCatFocus(productListsDoc[0]._id)
-      getProductListItems(productListsDoc[0]._id)
+      getCategoryItems(productListsDoc[0]._id)
     }
     
-    getProductLists()
+    getCategories()
   }, []);
 
-  // Fetch productLists from server
-  const fetchProductLists = async () => {
+  // Fetch categories from server
+  const fetchCategories = async () => {
     const res = await fetch('http://localhost:5000/cats/', {})
     const data = await res.json()
 
     return data
   }
   
-  // Fetch products to active productlist from server 
+  // Fetch products to active category from server 
   const fetchProducts = async (id) => {
     const res = await fetch(`http://localhost:5000/cats/${id}/products/`, {})
     const data = await res.json()
@@ -53,16 +53,16 @@ function App() {
       method: "DELETE"
     })
     if(res.status === 200) {
-      setProductlists(productlists.filter((productlist) => productlist._id !== id))
+      setCategories(categories.filter((category) => category._id !== id))
     } else {
-      console.log('Error deleting this productlist')
+      console.log('Error deleting this category')
     }
   }
 
   // Reload categories
   const reloadCats = async () => {
-    const data = await fetchProductLists();
-    setProductlists(data)
+    const data = await fetchCategories();
+    setCategories(data)
   }
 
   // Add new category
@@ -77,15 +77,15 @@ function App() {
 
     const data = await res.json
 
-    setProductlists([...productlists, data])
+    setCategories([...categories, data])
   }
   
   // PRODUCTS
   
   // Get products of a specific list
-  const getProductListItems = async (id) => {
+  const getCategoryItems = async (id) => {
     const data = await fetchProducts(id);
-    setproductListItems(data)
+    setCategoryItems(data)
   }
 
   // Add new product to a specific list
@@ -100,7 +100,7 @@ function App() {
 
     const data = await res.json
 
-    setproductListItems([...productListItems, data])
+    setCategoryItems([...categoryItems, data])
   }
 
   // Delete specific product
@@ -109,7 +109,7 @@ function App() {
       method: "DELETE"
     })
     if(res.status === 200) {
-      setproductListItems(productListItems.filter((productListItems) => productListItems._id !== prodId))
+      setCategoryItems(categoryItems.filter((categoryItems) => categoryItems._id !== prodId))
     } else {
       console.log(`Error deleting product with id ${prodId}`)
     }
@@ -121,15 +121,15 @@ function App() {
       <Header title='Ökotest Listen' className='appHeader'/>
       <div className='appContent'>
         <CatList 
-          catlists={productlists} 
+          catlists={categories} 
           activeCat={activeCat} 
           setCatFocus={setCatFocus} 
           onDelete={deleteCategory} 
           reload={reloadCats} 
-          fetchProducts={getProductListItems}
+          fetchProducts={getCategoryItems}
           addCategory={addCategory}
         />
-        <ProductList items={productListItems} activeCat={activeCat} deleteProduct={deleteProduct} addProduct={addProduct}/>
+        <ProductList items={categoryItems} activeCat={activeCat} deleteProduct={deleteProduct} addProduct={addProduct}/>
       </div>
     </div>
   );

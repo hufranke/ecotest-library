@@ -117,3 +117,9 @@ body {
   background-color: #f4f4f4;
   padding-left: 20px;
 }
+
+.fa-btn {
+  color: rgba(0,0,0,0.45);
+  cursor: pointer;
+  margin-right: 3px;
+}
