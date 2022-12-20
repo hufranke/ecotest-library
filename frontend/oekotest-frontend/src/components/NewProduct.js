@@ -3,7 +3,7 @@ import { useState } from "react";
 const NewProduct = ({addProduct, catId}) => {
     const [title, setTitle] = useState('')
     const [provider, setProvider] = useState('')
-    const [price, setPrice] = useState('0')
+    const [price, setPrice] = useState()
     const [rating, setRating] = useState('')
 
     const onSubmit = (e) => {
@@ -39,10 +39,34 @@ const NewProduct = ({addProduct, catId}) => {
                 <label htmlFor="newRating">Bewertung</label>
             </div>
             <div className="new-input-form-inputs">
-                <input id="newTitle" name="newTitle" type={'text'} placeholder={'Name'} value={title} required onChange={(e) => setTitle(e.target.value)}/>
-                <input id="newProvider" name="newProvider" type={'text'} placeholder={'Anbieter'} value={provider} required onChange={(e) => setProvider(e.target.value)}/>
-                <input id="newPrice" name="newPrice" type={'text'} placeholder={'Preis'} value={price} onChange={(e) => setPrice(e.target.value)}/>
-                <select id="newRating" name="newRating" onChange={(e) => setRating(e.target.value)}>
+                <input
+                    id="newTitle"
+                    name="newTitle" 
+                    type={'text'} 
+                    placeholder={'Name'} 
+                    value={title} 
+                    onChange={(e) => setTitle(e.target.value)} 
+                    required />
+                <input 
+                    id="newProvider" 
+                    name="newProvider" 
+                    type={'text'} 
+                    placeholder={'Anbieter'} 
+                    value={provider} 
+                    onChange={(e) => setProvider(e.target.value)} 
+                    required />
+                <input 
+                    id="newPrice" 
+                    name="newPrice" 
+                    type={'text'} 
+                    placeholder={'Preis'} 
+                    value={price} 
+                    onChange={(e) => setPrice(e.target.value)}/>
+                <select 
+                    id="newRating" 
+                    name="newRating" 
+                    onChange={(e) => setRating(e.target.value)}
+                >
                     <option value={'sehr gut'}>sehr gut</option>
                     <option value={'gut'}>gut</option>
                     <option value={'befriedigend'}>befriedigend</option>

@@ -34,7 +34,7 @@ app.get("/cats", (req, res) => {
     })
 })
 /**
- * POST /lists
+ * POST /cats
  * Create a new list
  */
 app.post("/cats", (req, res) => {
@@ -48,7 +48,7 @@ app.post("/cats", (req, res) => {
     })
 })
 /**
- * GET /lists:id
+ * GET /cats:id
  * Get a specific list
  */
 app.get("/cats/:id", (req, res) => {
@@ -59,7 +59,7 @@ app.get("/cats/:id", (req, res) => {
     })
 })
 /**
- * PATCH /lists:id
+ * PATCH /cats:id
  * Update a specific list
  */
 app.patch("/cats/:id", (req, res) => {
@@ -67,9 +67,9 @@ app.patch("/cats/:id", (req, res) => {
         _id: req.params.id
     }, {
         $set: req.body
-    }).then((catsDoc) => {
-        res.send(`Product list ${catsDoc.id} updated`)
-        // res.send(producListDoc)
+    }, {new: true}).then((catDoc) => {
+        // res.send(`Product list ${catsDoc._id} updated`)
+        res.send(catDoc)
     })
 })
 /**

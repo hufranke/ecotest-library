@@ -19,10 +19,10 @@ function App() {
   // Initial
   useEffect(() => {
     const getCategories = async () => {
-      const productListsDoc = await fetchCategories();
-      setCategories(productListsDoc)
-      setCatFocus(productListsDoc[0]._id)
-      getCategoryItems(productListsDoc[0]._id)
+      const data = await fetchCategories();
+      setCategories(data)
+      setCatFocus(data[0]._id)
+      getCategoryItems(data[0]._id)
     }
     
     getCategories()
@@ -59,8 +59,8 @@ function App() {
     }
   }
 
-  // Reload categories
-  const reloadCats = async () => {
+  // Get categories
+  const reloadCategories = async () => {
     const data = await fetchCategories();
     setCategories(data)
   }
@@ -77,7 +77,31 @@ function App() {
 
     const data = await res.json
 
+    // Somehow a newly added category is only properly shown if reloaded. Otherwise it shows an empty <CatItem/> container
     setCategories([...categories, data])
+    reloadCategories()
+  }
+
+  // Change existing category
+  /* Throwing CORS error */
+  const editCat = async (catId, catData) => {
+    try{
+      const res = await fetch(`http://localhost:5000/cats/${catId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(catData)
+      })
+  
+      const data = await res.json
+      
+      console.log(data)
+      setCategories([...categories, data])
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
   
   // PRODUCTS
@@ -125,9 +149,10 @@ function App() {
           activeCat={activeCat} 
           setCatFocus={setCatFocus} 
           onDelete={deleteCategory} 
-          reload={reloadCats} 
+          reload={reloadCategories}
           fetchProducts={getCategoryItems}
           addCategory={addCategory}
+          editCat={editCat}
         />
         <ProductList items={categoryItems} activeCat={activeCat} deleteProduct={deleteProduct} addProduct={addProduct}/>
       </div>

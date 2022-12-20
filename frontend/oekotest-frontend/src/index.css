@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:wght@200&display=swap');
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -62,7 +62,7 @@ body {
   font-family: inherit;
 }
 
-.product-container {
+.list-product-container {
   width: 800px;
 }
 

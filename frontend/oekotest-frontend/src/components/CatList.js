@@ -4,7 +4,7 @@ import {FaSyncAlt} from 'react-icons/fa'
 import { useState } from 'react'
 import NewCat from './NewCat'
 
-const CatList = ({catlists, onDelete, reload, fetchProducts, activeCat, setCatFocus, addCategory}) => {
+const CatList = ({catlists, onDelete, editCat, reload, fetchProducts, activeCat, setCatFocus, addCategory}) => {
     const [dispNewCat, setDispNewCat] = useState(false)
 
     const toggleDispNewCat = () => {
@@ -29,6 +29,7 @@ const CatList = ({catlists, onDelete, reload, fetchProducts, activeCat, setCatFo
                         key={catlistItem._id}
                         catlistItem={catlistItem}
                         onDelete={onDelete}
+                        editCat={editCat}
                         fetchProducts={fetchProducts}
                         activeCat={activeCat}
                         setActive={setCatFocus}/>

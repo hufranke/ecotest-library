@@ -21,7 +21,7 @@ const ProductList = ({items, activeCat, deleteProduct, addProduct}) => {
             <div>
                 {dispNewProduct === true ? <NewProduct addProduct={addProduct} catId={activeCat}/> :''}
             </div>
-            <section className='product-container'>
+            <section className='list-product-container'>
                 {items.length > 0 ? (
                     <div className='product-heading-container'>
                         <div className="product-heading">Name</div>
